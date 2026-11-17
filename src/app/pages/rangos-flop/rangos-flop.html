@@ -1,7 +1,54 @@
 <section class="rangos-layout">
   <div class="rangos-panel">
+    <!-- Botones de Posición y Stack -->
+    <div class="preset-selector" role="group" aria-label="Rangos predeterminados por posición y stack">
+      <div class="preset-row">
+        <span class="preset-row__label">Posición:</span>
+        <div class="preset-row__buttons">
+          @for (pos of positions; track pos) {
+            <button
+              type="button"
+              [class.active]="selectedPosition() === pos"
+              (click)="selectPosition(pos)"
+            >
+              {{ pos }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="preset-row">
+        <span class="preset-row__label">Stack:</span>
+        <div class="preset-row__buttons">
+          @for (stack of stacks; track stack) {
+            <button
+              type="button"
+              [class.active]="selectedStack() === stack"
+              (click)="selectStack(stack)"
+            >
+              {{ stack }}bb
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Input de rango manual sincronizado -->
+    <div class="range-input-box">
+      <label class="sr-only" for="range-notation-input">Rango en texto</label>
+      <input
+        id="range-notation-input"
+        type="text"
+        class="range-input-box__field"
+        [value]="rangeInputText()"
+        (input)="onTextInput($any($event.target).value)"
+        placeholder="Ej: 22+, A2s+, KTo+, AKs:0.5"
+      />
+    </div>
+
+    <!-- Barra de frecuencias para pintar a mano -->
     <div class="weight-toolbar">
-      <span class="weight-toolbar__label">Frecuencia:</span>
+      <span class="weight-toolbar__label">Pincel:</span>
       <button type="button" (click)="setWeightPreset(1)" [class.active]="activeWeight() === 1">100%</button>
       <button type="button" (click)="setWeightPreset(0.75)" [class.active]="activeWeight() === 0.75">75%</button>
       <button type="button" (click)="setWeightPreset(0.5)" [class.active]="activeWeight() === 0.5">50%</button>
@@ -12,7 +59,7 @@
     <app-range-matrix
       [weights]="selectedWeights()"
       [activeWeight]="activeWeight()"
-      (weightsChange)="selectedWeights.set($event)"
+      (weightsChange)="onManualMatrixChange($event)"
     />
   </div>
 </section>
