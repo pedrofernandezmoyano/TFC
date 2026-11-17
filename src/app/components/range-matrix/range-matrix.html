@@ -1,0 +1,35 @@
+<div class="matrix-wrapper" (pointerup)="stopDragging()" (pointerleave)="stopDragging()">
+  <div
+    class="matrix-grid"
+    role="grid"
+    aria-label="Matriz de selección de rangos de 13 por 13"
+  >
+    @for (cell of cells; track cell.id) {
+      @let weight = getWeight(cell.id);
+      <button
+        type="button"
+        class="matrix-cell"
+        [class.matrix-cell--pair]="cell.type === 'pair'"
+        [class.matrix-cell--suited]="cell.type === 'suited'"
+        [class.matrix-cell--selected]="weight > 0"
+        [style.--cell-fill]="(weight * 100) + '%'"
+        [attr.aria-pressed]="weight > 0"
+        [attr.aria-label]="cell.id + ': ' + (weight * 100) + '% (' + cell.combos + ' combos)'"
+        [title]="cell.id + ' · ' + (weight * 100) + '% (' + cell.combos + ' combos)'"
+        (pointerdown)="onCellPointerDown(cell, $event)"
+        (pointerenter)="onCellPointerEnter(cell)"
+        (keydown)="onCellKeyDown(cell, $event)"
+      >
+        <span class="matrix-cell__label">{{ cell.id }}</span>
+        @if (weight > 0 && weight < 1) {
+          <span class="matrix-cell__weight">{{ (weight * 100).toFixed(0) }}%</span>
+        }
+      </button>
+    }
+  </div>
+
+  <footer class="matrix-footer">
+    <span><strong>{{ selectedCombos() }}</strong> / 1326 combos</span>
+    <span class="matrix-footer__pct">{{ rangePercentage() }}% del rango</span>
+  </footer>
+</div>

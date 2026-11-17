@@ -1,4 +1,18 @@
-<section class="page-placeholder">
-  <h1>Análisis de rangos contra flop</h1>
-  <p>Módulo en construcción (Iteración 1 y 3).</p>
+<section class="rangos-layout">
+  <div class="rangos-panel">
+    <div class="weight-toolbar">
+      <span class="weight-toolbar__label">Frecuencia:</span>
+      <button type="button" (click)="setWeightPreset(1)" [class.active]="activeWeight() === 1">100%</button>
+      <button type="button" (click)="setWeightPreset(0.75)" [class.active]="activeWeight() === 0.75">75%</button>
+      <button type="button" (click)="setWeightPreset(0.5)" [class.active]="activeWeight() === 0.5">50%</button>
+      <button type="button" (click)="setWeightPreset(0.25)" [class.active]="activeWeight() === 0.25">25%</button>
+      <button type="button" class="btn-clear" (click)="clearRange()">Limpiar</button>
+    </div>
+
+    <app-range-matrix
+      [weights]="selectedWeights()"
+      [activeWeight]="activeWeight()"
+      (weightsChange)="selectedWeights.set($event)"
+    />
+  </div>
 </section>

@@ -1,0 +1,92 @@
+.matrix-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  user-select: none;
+  width: 100%;
+  max-width: 520px;
+}
+
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 1px;
+  background-color: var(--color-border);
+  border: var(--border-width) solid var(--color-border-strong);
+}
+
+.matrix-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+/* Diferenciación sutil entre pares, suited y offsuit sin salir de la base neutra */
+.matrix-cell--pair {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+.matrix-cell--suited {
+  color: var(--color-text-primary);
+}
+
+.matrix-cell:hover {
+  outline: 1px solid var(--color-text-primary);
+  z-index: 1;
+}
+
+/* Relleno proporcional al peso (0% a 100%) usando el color de acento */
+.matrix-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: var(--cell-fill, 0%);
+  background-color: var(--color-accent);
+  pointer-events: none;
+}
+
+.matrix-cell--selected {
+  color: var(--color-accent-contrast);
+  font-weight: 600;
+}
+
+.matrix-cell__label,
+.matrix-cell__weight {
+  position: relative;
+  z-index: 1;
+  line-height: 1.1;
+}
+
+.matrix-cell__weight {
+  font-size: 9px;
+  opacity: 0.9;
+}
+
+.matrix-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--color-bg-surface);
+  border: var(--border-width) solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.matrix-footer strong,
+.matrix-footer__pct {
+  color: var(--color-text-primary);
+}
